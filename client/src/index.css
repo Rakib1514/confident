@@ -1,1 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
+
+@theme {
+  --font-bitter: "Bitter", serif;
+  --font-Roboto: "Roboto", sans-serif;
+
+  --color-primary: #179bd7;
+  --color-secondary: #253b80;
+  --color-base-100: #ffffff;
+  --color-base-200: #d6d8d8;
+  --color-base-300: #212327;
+  --color-g1: #0273ff;
+  --color-highlight: #f1f503;
+}
