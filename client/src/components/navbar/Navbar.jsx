@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import NavMenu from "./NavMenu";
 
 const Navbar = () => {
@@ -6,7 +6,7 @@ const Navbar = () => {
     <div className="bg-secondary py-6 text-white relative">
       <div className="w-10/12 mx-auto flex justify-between items-center">
         <div>
-          <span className="text-2xl font-semibold font-bitter">Confident</span>
+          <Link to='/'><span className="text-2xl font-semibold font-bitter">Confident</span></Link>
         </div>
         <ul className="flex gap-4 items-center">
           <li>
