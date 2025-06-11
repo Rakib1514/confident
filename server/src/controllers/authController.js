@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
+require("dotenv").config();
 
 const userSignIn = async (req, res) => {
   const { email, password } = req.body;
@@ -18,7 +19,7 @@ const userSignIn = async (req, res) => {
       expiresIn: "1d",
     });
 
-    const { password: _, __v, ...userSafe } = user.toObject();
+    const { password: _, _v, ...userSafe } = user.toObject();
 
     res.status(200).json({
       success: true,
@@ -28,8 +29,31 @@ const userSignIn = async (req, res) => {
   } catch (error) {
     console.log("Error", error);
 
-    res.status(500).json({ success: false, message: "Internal Server Error" });
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+      error: error.message,
+    });
   }
 };
 
-module.exports = { userSignIn };
+const userSignUp = async (req, res) => {
+  const user = req.body;
+
+  try {
+    const newUser = await User.create(user);
+    res.status(200).json({
+      success: true,
+      message: "Successfully Registered. Please sign-in",
+    });
+  } catch (error) {
+    console.log("ERROR", error);
+
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+module.exports = { userSignIn, userSignUp };

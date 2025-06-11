@@ -1,10 +1,20 @@
 const express = require("express");
-const dotenv = require("dotenv");
-dotenv.config();
-const mongoose = require('mongoose');
+const cors = require("cors");
+const connectDB = require("./src/config/db");
+require("dotenv").config();
+
+// Require routes
+const authRoute = require("./src/routes/authRoute");
 
 const port = process.env.PORT;
 const app = express();
+
+app.use(express.json());
+app.use(cors());
+
+connectDB();
+
+app.use("/auth", authRoute);
 
 app.get("/", async (req, res) => {
   res.send("CONFIDENT SERVER IS RUNNING");
