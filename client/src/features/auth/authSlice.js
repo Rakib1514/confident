@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { userSignUp, userSignIn } from "./authThunks";
 
 const initialState = {
   user: null,
   isLoading: false,
-  error: null
+  error: null,
 };
 
 const authSlice = createSlice({
@@ -17,8 +18,37 @@ const authSlice = createSlice({
       state.user = action.payload;
     },
     setError: (state, action) => {
-      state.error = action.payload
-    }
+      state.error = action.payload;
+    },
+  },
+
+  extraReducers: (builder) => {
+    builder
+      //* Sign up
+      .addCase(userSignUp.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(userSignUp.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(userSignUp.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(userSignIn.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(userSignIn.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+      })
+      .addCase(userSignIn.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      });
   },
 });
 
