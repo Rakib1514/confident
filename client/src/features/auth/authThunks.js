@@ -21,7 +21,7 @@ export const userSignUp = (user) => async (dispatch) => {
     const res = await axios.post("/auth/sign-up", user);
     console.log(res.data.message);
   } catch (error) {
-    dispatch(setError(error) || "sign up failed");
+    dispatch(setError(error?.response?.data?.error) || "sign up failed");
   } finally {
     dispatch(setIsLoading(false));
   }

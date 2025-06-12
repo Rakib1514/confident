@@ -1,8 +1,14 @@
 import { Box, Button, TextField } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { userSignUp } from "../../features/auth/authThunks";
 
 const SignUp = () => {
+  const dispatch = useDispatch();
+
+  const { error, isLoading } = useSelector((state) => state.auth);
+
   const {
     register,
     handleSubmit,
@@ -10,7 +16,7 @@ const SignUp = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    dispatch(userSignUp(data));
   };
 
   return (
@@ -73,9 +79,14 @@ const SignUp = () => {
           />
         </div>
 
-        <Button type="submit" fullWidth variant="contained">
+        <div>
+          {error && <span className="">{error}</span>}
+        </div>
+
+        <Button loading={isLoading} type="submit" fullWidth variant="contained">
           Sign Up
         </Button>
+        
       </Box>
     </div>
   );
