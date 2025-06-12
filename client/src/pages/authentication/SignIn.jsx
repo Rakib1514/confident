@@ -3,11 +3,15 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router";
+import { userSignIn } from "../../features/auth/authThunks";
 
 const SignIn = () => {
   const dispatch = useDispatch();
 
-  const { error, isLoading } = useSelector((state) => state.auth);
+  const { error, isLoading, user } = useSelector((state) => state.auth);
+
+  console.log("ERROR", error);
+  console.log("USERRRRRRRRRR", user)
 
   const {
     handleSubmit,
@@ -17,7 +21,7 @@ const SignIn = () => {
   } = useForm();
 
   const onSubmit = (values) => {
-    console.log(values);
+    dispatch(userSignIn(values));
   };
 
   return (
@@ -60,7 +64,13 @@ const SignIn = () => {
           helperText={errors.password?.message}
         />
 
-        <Button loading={isLoading} type="submit" fullWidth variant="contained" sx={{mt: 2}}>
+        <Button
+          loading={isLoading}
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 2 }}
+        >
           Sign Up
         </Button>
 
