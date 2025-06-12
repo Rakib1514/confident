@@ -19,7 +19,7 @@ const userSignIn = async (req, res) => {
       expiresIn: "1d",
     });
 
-    const { password: _, _v, ...userSafe } = user.toObject();
+    const { password: _, __v, ...userSafe } = user.toObject();
 
     res.status(200).json({
       success: true,
