@@ -3,13 +3,12 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { userSignUp } from "../../features/auth/authThunks";
+import { Link } from "react-router";
 
 const SignUp = () => {
   const dispatch = useDispatch();
 
   const { error, isLoading } = useSelector((state) => state.auth);
-
-  console.log(error);
 
   const {
     register,
@@ -22,6 +21,7 @@ const SignUp = () => {
     try {
       const result = await dispatch(userSignUp(data)).unwrap();
       console.log("Signup successful:", result);
+      alert(result.message)
       reset();
     } catch (err) {
       console.error("Signup failed:", err);
@@ -29,7 +29,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="grid lg:grid-cols-2 grid-cols-1 min-h-screen w-10/12 mx-auto">
+    <div className="grid lg:grid-cols-2 grid-cols-1 min-h-screen w-10/12 mx-auto mt-6">
       <div className="border order-2 lg:order-1">side animation or photo</div>
 
       <Box
@@ -94,6 +94,9 @@ const SignUp = () => {
 
         <div className="h-6 mt-4">
           {error && <span className="text-sm text-red-600">{error}</span>}
+        </div>
+        <div className="text-sm underline text-secondary">
+          <Link to={'/sign-in'}>Already have an account? Sign-in</Link>
         </div>
       </Box>
     </div>

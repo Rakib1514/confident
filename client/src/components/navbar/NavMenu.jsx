@@ -13,7 +13,7 @@ const NavMenu = () => {
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     if (!user) {
-      return navigate("/sign-up");
+      return navigate("/sign-in");
     }
 
     setAnchorEl(event.currentTarget);
