@@ -9,14 +9,17 @@ const SignUp = () => {
 
   const { error, isLoading } = useSelector((state) => state.auth);
 
+  console.log(error)
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    dispatch(userSignUp(data));
+  const onSubmit = async (data) => {
+    const result = await dispatch(userSignUp(data));
+    console.log(result)
   };
 
   return (
@@ -79,13 +82,16 @@ const SignUp = () => {
           />
         </div>
 
-        <div>
-          {error && <span className="">{error}</span>}
-        </div>
+        
 
         <Button loading={isLoading} type="submit" fullWidth variant="contained">
+
           Sign Up
         </Button>
+
+        <div className="h-6 mt-4">
+          {/* {error && <span className="text-sm text-red-600">{error}</span>} */}
+        </div>
         
       </Box>
     </div>
