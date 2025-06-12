@@ -31,7 +31,16 @@ export const userSignIn = (email, password) => async (dispatch) => {
 //   }
 // };
 
-export const userSignUp = createAsyncThunk("auth/signup", async (newUserData) => {
-  const res = await axios.post("/auth/sign-up", newUserData);
-  return res.data;
-});
+export const userSignUp = createAsyncThunk(
+  "auth/signup",
+  async (newUserData, { rejectWithValue }) => {
+    try {
+      const res = await axios.post("/auth/sign-up", newUserData);
+      if (res.data.success) {
+        return res.data;
+      }
+    } catch (err) {
+      return rejectWithValue(err.response.data.error);
+    }
+  }
+);

@@ -9,17 +9,23 @@ const SignUp = () => {
 
   const { error, isLoading } = useSelector((state) => state.auth);
 
-  console.log(error)
-  
+  console.log(error);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
   const onSubmit = async (data) => {
-    const result = await dispatch(userSignUp(data));
-    console.log(result)
+    try {
+      const result = await dispatch(userSignUp(data)).unwrap();
+      console.log("Signup successful:", result);
+      reset();
+    } catch (err) {
+      console.error("Signup failed:", err);
+    }
   };
 
   return (
@@ -82,17 +88,13 @@ const SignUp = () => {
           />
         </div>
 
-        
-
         <Button loading={isLoading} type="submit" fullWidth variant="contained">
-
           Sign Up
         </Button>
 
         <div className="h-6 mt-4">
-          {/* {error && <span className="text-sm text-red-600">{error}</span>} */}
+          {error && <span className="text-sm text-red-600">{error}</span>}
         </div>
-        
       </Box>
     </div>
   );
