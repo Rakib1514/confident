@@ -1,12 +1,21 @@
 import { Button, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router";
 import AccountIcon from "../AccountIcon";
-import { Link } from "react-router";
 
 const NavMenu = () => {
+  const user = useSelector((state) => state.auth.user);
+
+  const navigate = useNavigate();
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
+    if (!user) {
+      return navigate("/sign-up");
+    }
+
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -22,9 +31,9 @@ const NavMenu = () => {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-         <AccountIcon width={32} height={32} />
+        <AccountIcon width={32} height={32} />
       </Button>
-      
+
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
@@ -36,7 +45,9 @@ const NavMenu = () => {
           },
         }}
       >
-        <MenuItem ><Link to={'/something'}>SOmething</Link></MenuItem>
+        <MenuItem>
+          <Link to={"/something"}>SOmething</Link>
+        </MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>
         <MenuItem onClick={handleClose}>Logout</MenuItem>
       </Menu>
