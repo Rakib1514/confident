@@ -10,8 +10,6 @@ const verifyToken = (req, res, next) => {
     });
   }
 
-  console.log(authHeader)
-
   const tokenParts = authHeader.split(" ");
   
   
