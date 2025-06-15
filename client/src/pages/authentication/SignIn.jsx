@@ -8,10 +8,7 @@ import { userSignIn } from "../../features/auth/authThunks";
 const SignIn = () => {
   const dispatch = useDispatch();
 
-  const { error, isLoading, user } = useSelector((state) => state.auth);
-
-  console.log("ERROR", error);
-  console.log("USERRRRRRRRRR", user)
+  const { error, isLoading } = useSelector((state) => state.auth);
 
   const {
     handleSubmit,
@@ -20,8 +17,19 @@ const SignIn = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (values) => {
-    dispatch(userSignIn(values));
+  const onSubmit = async (values) => {
+    try {
+      const result = await dispatch(userSignIn(values));
+
+      console.log("something ", result);
+
+      if (result.meta.requestStatus === "fulfilled") {
+        alert("sign in success");
+        reset();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -71,7 +79,7 @@ const SignIn = () => {
           variant="contained"
           sx={{ mt: 2 }}
         >
-          Sign Up
+          Sign in
         </Button>
 
         <div className="h-6 mt-4">
